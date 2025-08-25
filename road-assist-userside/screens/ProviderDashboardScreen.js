@@ -1,74 +1,73 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { View, Text, Button, ScrollView, Alert, StyleSheet } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
-import axios from 'axios';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import * as Location from 'expo-location';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 
 const ProviderDashboardScreen = () => {
   const [requests, setRequests] = useState([]);
-  const providerId = 1; // TODO: Replace with actual logged-in provider ID
-  const navigation = useNavigation(); // Hook inside component
+  const [providerLocation, setProviderLocation] = useState(null);
+  const navigation = useNavigation();
 
-  // Periodically send provider location to server when screen is focused
+  const providerId = 1; // 👈 Replace with real provider ID if you have auth
+
+  // Fetch open requests from backend
+  useEffect(() => {
+    axios.get('http://192.168.42.159:5000/api/open-requests')
+      .then(res => setRequests(res.data))
+      .catch(err => {
+        console.error('❌ Error fetching requests:', err);
+        Alert.alert('Error', 'Could not fetch requests');
+      });
+  }, []);
+
+  // Track provider's location in real-time every 10 seconds
   useFocusEffect(
-    React.useCallback(() => {
-      let interval = setInterval(() => {
+    useCallback(() => {
+      const interval = setInterval(() => {
         Location.getCurrentPositionAsync({})
-          .then(loc => {
-            const { latitude, longitude } = loc.coords;
-            axios.put(`http://192.168.37.159:5000/api/update-location/${providerId}`, {
-              latitude,
-              longitude
+          .then((loc) => {
+            setProviderLocation(loc.coords);
+            axios.put(`http://192.168.42.159:5000/api/update-location/${providerId}`, {
+              latitude: loc.coords.latitude,
+              longitude: loc.coords.longitude
             });
           })
-          .catch(err => console.log('📍 Location error:', err));
+          .catch((err) => console.log('📍 Location error:', err));
       }, 10000);
+
       return () => clearInterval(interval);
     }, [])
   );
 
-  // Fetch open requests
-  useEffect(() => {
-    axios.get('http://192.168.37.159:5000/api/open-requests')
-      .then(res => setRequests(res.data))
-      .catch(err => {
-        console.error('❌ Failed to load requests:', err);
-        Alert.alert('Error', 'Could not load requests.');
-      });
-  }, []);
-
-  // Accept request
+  // Accept a help request
   const acceptRequest = (requestId) => {
-    axios.put(`http://192.168.37.159:5000/api/assign-request/${requestId}`, {
+    axios.put(`http://192.168.42.159:5000/api/assign-request/${requestId}`, {
       provider_id: providerId
     })
-    .then(() => {
-      Alert.alert('Success', '✅ Request accepted!');
-      setRequests(prev => prev.filter(r => r.id !== requestId));
-    })
-    .catch(err => {
-      console.error('❌ Failed to accept request:', err);
-      Alert.alert('Error', 'Could not accept the request.');
-    });
+      .then(() => {
+        Alert.alert('✅ Accepted', 'Request has been accepted!');
+        setRequests(prev => prev.filter(r => r.id !== requestId));
+      })
+      .catch(err => {
+        console.error('❌ Accept error:', err);
+        Alert.alert('Error', 'Failed to accept request');
+      });
   };
 
-  // Logout function
   const handleLogout = () => {
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'Login' }]
-    });
+    navigation.reset({ index: 0, routes: [{ name: 'Login' }] });
   };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>📋 Open Requests</Text>
+      <Text style={styles.heading}>🔧 Provider Dashboard</Text>
 
       {requests.length === 0 ? (
-        <Text>No open requests available.</Text>
+        <Text>No open requests found.</Text>
       ) : (
-        requests.map(req => (
+        requests.map((req) => (
           <View key={req.id} style={styles.card}>
             <Text><Text style={styles.label}>Issue:</Text> {req.issue_type}</Text>
             <Text><Text style={styles.label}>Location:</Text> {req.latitude}, {req.longitude}</Text>
@@ -79,12 +78,12 @@ const ProviderDashboardScreen = () => {
                 latitude: parseFloat(req.latitude),
                 longitude: parseFloat(req.longitude),
                 latitudeDelta: 0.01,
-                longitudeDelta: 0.01,
+                longitudeDelta: 0.01
               }}
             >
               <Marker
                 coordinate={{ latitude: parseFloat(req.latitude), longitude: parseFloat(req.longitude) }}
-                title="Customer Location"
+                title="Customer"
               />
             </MapView>
 
@@ -99,29 +98,16 @@ const ProviderDashboardScreen = () => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    padding: 15
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10
-  },
+  container: { padding: 16 },
+  heading: { fontSize: 20, fontWeight: 'bold', marginBottom: 10 },
   card: {
-    marginBottom: 25,
-    padding: 10,
-    backgroundColor: '#f9f9f9',
-    borderRadius: 8,
-    elevation: 2
+    backgroundColor: '#f1f1f1',
+    padding: 12,
+    marginBottom: 15,
+    borderRadius: 8
   },
-  label: {
-    fontWeight: 'bold'
-  },
-  map: {
-    width: '100%',
-    height: 200,
-    marginVertical: 10
-  }
+  label: { fontWeight: 'bold' },
+  map: { height: 200, width: '100%', marginVertical: 10 }
 });
 
 export default ProviderDashboardScreen;

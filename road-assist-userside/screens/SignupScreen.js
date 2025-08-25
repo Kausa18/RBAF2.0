@@ -18,7 +18,7 @@ const SignupScreen = ({ navigation }) => {
 
   const handleSignup = async () => {
     try {
-      const res = await axios.post('http://192.168.37.159:5000/api/signup', form);
+      const res = await axios.post('http://192.168.42.159:5000/api/signup', form);
       Alert.alert('✅ Signup successful! Please log in.');
       navigation.navigate('Login');
     } catch (err) {

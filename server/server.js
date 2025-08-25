@@ -42,23 +42,26 @@ app.post('/api/login', (req, res) => {
 
 // ========== Help Request ==========
 app.post('/api/request-help', (req, res) => {
-  const { latitude, longitude, issue_type, user_id } = req.body;
+  const { latitude, longitude, issue_type, user_id, provider_id } = req.body;
 
+  // Check for required fields
   if (!latitude || !longitude || !issue_type || !user_id) {
     return res.status(400).json({ message: 'Missing required data' });
   }
 
+  // Construct SQL with dynamic provider_id (can be NULL or real value)
   const sql = `
     INSERT INTO requests (user_id, provider_id, issue_type, latitude, longitude)
-    VALUES (?, NULL, ?, ?, ?)
+    VALUES (?, ?, ?, ?, ?)
   `;
 
-  db.query(sql, [user_id, issue_type, latitude, longitude], (err, result) => {
+  db.query(sql, [user_id, provider_id || null, issue_type, latitude, longitude], (err, result) => {
     if (err) {
       console.error('MySQL error:', err);
       return res.status(500).json({ message: 'Failed to save request' });
     }
-    res.status(200).json({ message: 'Request saved successfully', id: result.insertId });
+
+    res.status(200).json({ message: '✅ Request saved successfully', id: result.insertId });
   });
 });
 

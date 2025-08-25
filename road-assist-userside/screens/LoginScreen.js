@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, Button, Alert, StyleSheet, TouchableOpacity } from 'react-native';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage'; 
 
 const LoginScreen = () => {
   const [email, setEmail] = useState('');
@@ -14,8 +15,9 @@ const LoginScreen = () => {
       return;
     }
     try {
-      const res = await axios.post('http://192.168.37.159:5000/api/login', { email, password });
-      const { user } = res.data;
+      const res = await axios.post('http://192.168.42.159:5000/api/login', { email, password });
+      const user = res.data.user;
+      await AsyncStorage.setItem('user', JSON.stringify(user));
 
       if (user.role === 'provider') {
         navigation.replace('ProviderDashboard');
