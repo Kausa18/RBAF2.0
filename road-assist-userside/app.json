@@ -1,31 +1,70 @@
 {
   "expo": {
-    "name": "road-assist-userside",
+    "name": "Road Assist",
     "slug": "road-assist-userside",
     "version": "1.0.0",
+    "sdkVersion": "50.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
+    "scheme": "roadassist",
+    "platforms": ["ios", "android", "web"],
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#007bff"
     },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
+      "bundleIdentifier": "com.roadassist.userside",
+      "buildNumber": "1",
       "infoPlist": {
-        "NSLocationWhenInUseUsageDescription": "This app uses your location to help match you with nearby road assistance providers."
+        "NSLocationWhenInUseUsageDescription": "This app uses your location to help match you with nearby road assistance providers.",
+        "NSLocationAlwaysAndWhenInUseUsageDescription": "This app needs location access to provide accurate road assistance services.",
+        "NSCameraUsageDescription": "This app may need camera access to document your roadside emergency.",
+        "NSPhotoLibraryUsageDescription": "This app may need photo library access to attach images to your assistance request."
       }
     },
     "android": {
-      "permissions": ["ACCESS_FINE_LOCATION", "ACCESS_COARSE_LOCATION"],
+      "permissions": [
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION", 
+        "INTERNET",
+        "ACCESS_NETWORK_STATE",
+        "CAMERA",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ],
+      "package": "com.roadassist.userside",
+      "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       }
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
+    },
+    "plugins": [
+      [
+        "expo-location",
+        {
+          "locationAlwaysAndWhenInUsePermission": "Allow Road Assist to use your location to find nearby service providers."
+        }
+      ],
+      "expo-font"
+    ],
+    "experiments": {
+      "typedRoutes": false
+    },
+    "extra": {
+      "apiUrl": "http://192.168.42.159:5000",
+      "pythonServiceUrl": "http://192.168.42.159:5001",
+      "mapProvider": "osm"
     }
   }
 }

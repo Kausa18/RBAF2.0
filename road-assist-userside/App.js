@@ -12,12 +12,44 @@ const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Login">
-        <Stack.Screen name="Login" component={LoginScreen} />
-        <Stack.Screen name="Signup" component={SignupScreen} />
-        <Stack.Screen name="UserDashboard" component={UserDashboard} />
-        <Stack.Screen name="ProviderDashboard" component={ProviderDashboardScreen} />
-        <Stack.Screen name="History" component={RequestHistoryScreen} />
+      <Stack.Navigator 
+        initialRouteName="Login"
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: '#007bff',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+      >
+        <Stack.Screen 
+          name="Login" 
+          component={LoginScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen 
+          name="Signup" 
+          component={SignupScreen}
+          options={{ title: 'Create Account' }}
+        />
+        <Stack.Screen 
+          name="UserDashboard" 
+          component={UserDashboard}
+          options={{ title: 'Road Assist' }}
+        />
+        <Stack.Screen 
+          name="ProviderDashboard" 
+          component={ProviderDashboardScreen}
+          options={{ title: 'Provider Dashboard' }}
+        />
+        {/* ✅ FIXED: Changed from "History" to "RequestHistory" to match navigation calls */}
+        <Stack.Screen 
+          name="RequestHistory" 
+          component={RequestHistoryScreen}
+          options={{ title: 'Request History' }}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
