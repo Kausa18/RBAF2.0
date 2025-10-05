@@ -1,0 +1,120 @@
+2025-09-18 09:53:59,201 - __main__ - INFO - Redis support enabled
+2025-09-18 09:53:59,293 - __main__ - INFO - Redis cache enabled successfully
+2025-09-18 09:54:00,697 - __main__ - INFO - Database connection pool created successfully
+2025-09-18 09:54:00,697 - __main__ - INFO - Database connection pool created successfully
+2025-09-18 09:54:00,700 - __main__ - INFO - Starting Nearest Provider Service...
+2025-09-18 09:54:00,700 - __main__ - INFO - Starting Nearest Provider Service...
+2025-09-18 09:54:00,701 - __main__ - INFO - Database: root@localhost/road_assist_db
+2025-09-18 09:54:00,701 - __main__ - INFO - Database: root@localhost/road_assist_db
+2025-09-18 09:54:01,931 - __main__ - INFO - Redis support enabled
+2025-09-18 09:54:01,939 - __main__ - INFO - Redis cache enabled successfully
+2025-09-18 09:54:02,065 - __main__ - INFO - Database connection pool created successfully
+2025-09-18 09:54:02,065 - __main__ - INFO - Database connection pool created successfully
+2025-09-18 09:54:02,067 - __main__ - INFO - Starting Nearest Provider Service...
+2025-09-18 09:54:02,067 - __main__ - INFO - Starting Nearest Provider Service...
+2025-09-18 09:54:02,068 - __main__ - INFO - Database: root@localhost/road_assist_db
+2025-09-18 09:54:02,068 - __main__ - INFO - Database: root@localhost/road_assist_db
+2025-09-22 10:17:00,266 - __main__ - INFO - Redis support enabled
+2025-09-22 10:17:00,428 - __main__ - INFO - Redis cache enabled successfully
+2025-09-22 10:17:01,739 - __main__ - INFO - Database connection pool created successfully
+2025-09-22 10:17:01,739 - __main__ - INFO - Database connection pool created successfully
+2025-09-22 10:17:01,741 - __main__ - INFO - Starting Nearest Provider Service...
+2025-09-22 10:17:01,741 - __main__ - INFO - Starting Nearest Provider Service...
+2025-09-22 10:17:01,741 - __main__ - INFO - Database: root@localhost/road_assist_db
+2025-09-22 10:17:01,741 - __main__ - INFO - Database: root@localhost/road_assist_db
+2025-09-22 10:17:03,135 - __main__ - INFO - Redis support enabled
+2025-09-22 10:17:03,145 - __main__ - INFO - Redis cache enabled successfully
+2025-09-22 10:17:03,562 - __main__ - INFO - Database connection pool created successfully
+2025-09-22 10:17:03,562 - __main__ - INFO - Database connection pool created successfully
+2025-09-22 10:17:03,569 - __main__ - INFO - Starting Nearest Provider Service...
+2025-09-22 10:17:03,569 - __main__ - INFO - Starting Nearest Provider Service...
+2025-09-22 10:17:03,570 - __main__ - INFO - Database: root@localhost/road_assist_db
+2025-09-22 10:17:03,570 - __main__ - INFO - Database: root@localhost/road_assist_db
+2025-09-22 13:10:53,824 - __main__ - INFO - Redis support enabled
+2025-09-22 13:10:53,895 - __main__ - INFO - Redis cache enabled successfully
+2025-09-22 13:10:54,982 - __main__ - INFO - Database connection pool created successfully
+2025-09-22 13:10:54,982 - __main__ - INFO - Database connection pool created successfully
+2025-09-22 13:10:54,983 - __main__ - INFO - Starting Nearest Provider Service...
+2025-09-22 13:10:54,983 - __main__ - INFO - Starting Nearest Provider Service...
+2025-09-22 13:10:54,984 - __main__ - INFO - Database: root@localhost/road_assist_db
+2025-09-22 13:10:54,984 - __main__ - INFO - Database: root@localhost/road_assist_db
+2025-09-22 13:10:56,293 - __main__ - INFO - Redis support enabled
+2025-09-22 13:10:56,303 - __main__ - INFO - Redis cache enabled successfully
+2025-09-22 13:10:56,646 - __main__ - INFO - Database connection pool created successfully
+2025-09-22 13:10:56,646 - __main__ - INFO - Database connection pool created successfully
+2025-09-22 13:10:56,648 - __main__ - INFO - Starting Nearest Provider Service...
+2025-09-22 13:10:56,648 - __main__ - INFO - Starting Nearest Provider Service...
+2025-09-22 13:10:56,649 - __main__ - INFO - Database: root@localhost/road_assist_db
+2025-09-22 13:10:56,649 - __main__ - INFO - Database: root@localhost/road_assist_db
+2025-09-22 13:20:02,977 - __main__ - INFO - Redis support enabled
+2025-09-22 13:20:03,001 - __main__ - INFO - Redis cache enabled successfully
+2025-09-22 13:20:03,367 - __main__ - INFO - Database connection pool created successfully
+2025-09-22 13:20:03,367 - __main__ - INFO - Database connection pool created successfully
+2025-09-22 13:20:03,369 - __main__ - INFO - Starting Nearest Provider Service...
+2025-09-22 13:20:03,369 - __main__ - INFO - Starting Nearest Provider Service...
+2025-09-22 13:20:03,369 - __main__ - INFO - Database: root@localhost/road_assist_db
+2025-09-22 13:20:03,369 - __main__ - INFO - Database: root@localhost/road_assist_db
+2025-09-22 13:20:04,889 - __main__ - INFO - Redis support enabled
+2025-09-22 13:20:04,911 - __main__ - INFO - Redis cache enabled successfully
+2025-09-22 13:20:05,077 - __main__ - INFO - Database connection pool created successfully
+2025-09-22 13:20:05,077 - __main__ - INFO - Database connection pool created successfully
+2025-09-22 13:20:05,079 - __main__ - INFO - Starting Nearest Provider Service...
+2025-09-22 13:20:05,079 - __main__ - INFO - Starting Nearest Provider Service...
+2025-09-22 13:20:05,079 - __main__ - INFO - Database: root@localhost/road_assist_db
+2025-09-22 13:20:05,079 - __main__ - INFO - Database: root@localhost/road_assist_db
+2025-09-22 15:19:05,829 - __main__ - WARNING - Cache error: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-09-22 15:19:32,650 - __main__ - WARNING - Cache error: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-09-22 15:21:13,857 - __main__ - WARNING - Cache error: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-09-22 15:21:13,857 - __main__ - WARNING - Cache error: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-09-22 15:21:14,257 - __main__ - WARNING - Slow request: match_providers took 4.61 seconds
+2025-09-22 15:21:14,257 - __main__ - WARNING - Slow request: match_providers took 4.61 seconds
+2025-09-22 15:21:18,296 - __main__ - WARNING - Failed to store metrics in Redis: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-09-22 15:21:18,296 - __main__ - WARNING - Failed to store metrics in Redis: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-09-22 15:21:26,175 - __main__ - WARNING - Cache error: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-09-22 15:21:26,175 - __main__ - WARNING - Cache error: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-09-22 15:21:26,217 - __main__ - WARNING - Slow request: match_providers took 4.16 seconds
+2025-09-22 15:21:26,217 - __main__ - WARNING - Slow request: match_providers took 4.16 seconds
+2025-09-22 15:21:30,259 - __main__ - WARNING - Failed to store metrics in Redis: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-09-22 15:21:30,259 - __main__ - WARNING - Failed to store metrics in Redis: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-09-22 15:33:23,293 - __main__ - WARNING - Cache error: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-09-22 15:33:23,293 - __main__ - WARNING - Cache error: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-09-22 15:33:23,501 - __main__ - WARNING - Slow request: match_providers took 4.35 seconds
+2025-09-22 15:33:23,501 - __main__ - WARNING - Slow request: match_providers took 4.35 seconds
+2025-09-22 15:33:27,574 - __main__ - WARNING - Failed to store metrics in Redis: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-09-22 15:33:27,574 - __main__ - WARNING - Failed to store metrics in Redis: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-09-22 15:35:02,222 - __main__ - WARNING - Cache error: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-09-22 15:35:02,222 - __main__ - WARNING - Cache error: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-09-22 15:35:02,255 - __main__ - WARNING - Slow request: match_providers took 4.16 seconds
+2025-09-22 15:35:02,255 - __main__ - WARNING - Slow request: match_providers took 4.16 seconds
+2025-09-22 15:35:06,313 - __main__ - WARNING - Failed to store metrics in Redis: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-09-22 15:35:06,313 - __main__ - WARNING - Failed to store metrics in Redis: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-09-22 15:44:20,367 - __main__ - WARNING - Cache error: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-09-22 15:44:20,367 - __main__ - WARNING - Cache error: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-09-22 15:44:20,549 - __main__ - WARNING - Slow request: match_providers took 4.23 seconds
+2025-09-22 15:44:20,549 - __main__ - WARNING - Slow request: match_providers took 4.23 seconds
+2025-09-22 15:44:24,613 - __main__ - WARNING - Failed to store metrics in Redis: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-09-22 15:44:24,613 - __main__ - WARNING - Failed to store metrics in Redis: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-09-26 12:44:47,426 - __main__ - INFO - Redis support enabled
+2025-09-26 12:44:47,591 - __main__ - INFO - Redis cache enabled successfully
+2025-09-26 12:44:51,593 - __main__ - INFO - Database connection pool created successfully
+2025-09-26 12:44:51,593 - __main__ - INFO - Database connection pool created successfully
+2025-09-26 12:44:51,604 - __main__ - INFO - Starting Nearest Provider Service...
+2025-09-26 12:44:51,604 - __main__ - INFO - Starting Nearest Provider Service...
+2025-09-26 12:44:51,605 - __main__ - INFO - Database: root@localhost/road_assist_db
+2025-09-26 12:44:51,605 - __main__ - INFO - Database: root@localhost/road_assist_db
+2025-09-26 12:44:54,697 - __main__ - INFO - Redis support enabled
+2025-09-26 12:44:54,718 - __main__ - INFO - Redis cache enabled successfully
+2025-09-26 12:44:54,958 - __main__ - INFO - Database connection pool created successfully
+2025-09-26 12:44:54,958 - __main__ - INFO - Database connection pool created successfully
+2025-09-26 12:44:54,963 - __main__ - INFO - Starting Nearest Provider Service...
+2025-09-26 12:44:54,963 - __main__ - INFO - Starting Nearest Provider Service...
+2025-09-26 12:44:54,964 - __main__ - INFO - Database: root@localhost/road_assist_db
+2025-09-26 12:44:54,964 - __main__ - INFO - Database: root@localhost/road_assist_db
+2025-09-28 01:57:13,303 - __main__ - INFO - Redis support enabled
+2025-09-28 01:57:13,378 - __main__ - INFO - Redis cache enabled successfully
+2025-09-28 01:57:16,001 - __main__ - CRITICAL - Failed to create connection pool: 1049 (42000): Unknown database 'road_assistance'
+2025-09-28 01:57:16,001 - __main__ - CRITICAL - Failed to create connection pool: 1049 (42000): Unknown database 'road_assistance'
+2025-10-05 09:54:48,074 - __main__ - INFO - Redis support enabled
+2025-10-05 09:54:48,639 - __main__ - INFO - Redis cache enabled successfully
+2025-10-05 09:55:00,638 - __main__ - CRITICAL - Failed to create connection pool: 1049 (42000): Unknown database 'road_assistance'
+2025-10-05 09:55:00,638 - __main__ - CRITICAL - Failed to create connection pool: 1049 (42000): Unknown database 'road_assistance'

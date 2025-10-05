@@ -73,7 +73,7 @@ const RequestHistoryScreen = ({ navigation }) => {
   const fetchRequestHistory = async (userId) => {
     try {
       const response = await axios.get(
-        `http://192.168.1.113:5000/api/user/${userId}/requests`
+        `http://172.20.10.3:5000/api/user/${userId}/requests`
       );
       setRequests(response.data);
     } catch (error) {

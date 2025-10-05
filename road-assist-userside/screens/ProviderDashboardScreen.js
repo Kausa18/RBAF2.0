@@ -74,8 +74,8 @@ const ProviderDashboardScreen = () => {
 
     setLoading(true);
     Promise.all([
-      axios.get('http://192.168.1.113:5000/api/open-requests'),
-      axios.get(`http://192.168.1.113:5000/api/provider/${provider.id}/statistics`)
+      axios.get('http://172.20.10.3:5000/api/open-requests'),
+      axios.get(`http://172.20.10.3:5000/api/provider/${provider.id}/statistics`)
     ])
       .then(([requestsRes, statsRes]) => {
         setRequests(requestsRes.data);
@@ -107,7 +107,7 @@ const ProviderDashboardScreen = () => {
           });
 
           setProviderLocation(loc.coords);
-          await axios.put(`http://192.168.1.113:5000/api/update-location/${provider.id}`, {
+          await axios.put(`http://172.20.10.3:5000/api/update-location/${provider.id}`, {
             latitude: loc.coords.latitude,
             longitude: loc.coords.longitude,
             is_available: isAvailable
@@ -127,7 +127,7 @@ const ProviderDashboardScreen = () => {
   // Toggle availability status
   const toggleAvailability = async () => {
     try {
-      await axios.put(`http://192.168.1.113:5000/api/provider/${provider.id}/availability`, {
+      await axios.put(`http://172.20.10.3:5000/api/provider/${provider.id}/availability`, {
         is_available: !isAvailable
       });
       setIsAvailable(!isAvailable);
@@ -155,7 +155,7 @@ const ProviderDashboardScreen = () => {
     }
 
     try {
-      await axios.put(`http://192.168.1.113:5000/api/assign-request/${request.id}`, {
+      await axios.put(`http://172.20.10.3:5000/api/assign-request/${request.id}`, {
         provider_id: provider.id
       });
       
@@ -198,7 +198,7 @@ const ProviderDashboardScreen = () => {
   // Update request status
   const updateRequestStatus = async (requestId, status) => {
     try {
-      await axios.put(`http://192.168.1.113:5000/api/request/${requestId}/status`, { status });
+      await axios.put(`http://172.20.10.3:5000/api/request/${requestId}/status`, { status });
       
       if (status === 'completed') {
         setActiveRequest(null);

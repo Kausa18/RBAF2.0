@@ -116,7 +116,7 @@ const UserDashboard = () => {
         longitudeDelta: LONGITUDE_DELTA,
       });
 
-      const response = await axios.post('http://192.168.1.113:5001/match-providers', {
+      const response = await axios.post('http://172.20.10.3:5001/match-providers', {
         latitude,
         longitude
       });
@@ -151,7 +151,7 @@ const UserDashboard = () => {
     setRequestLoading(true);
     try {
       // Create the help request
-      const response = await axios.post('http://192.168.1.113:5000/api/request-help', {
+      const response = await axios.post('http://172.20.10.3:5000/api/request-help', {
         user_id: userId,
         provider_id: selectedProvider.id,
         latitude: location.latitude,

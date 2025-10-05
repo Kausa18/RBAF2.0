@@ -146,8 +146,8 @@ def monitor_performance(f):
 DB_CONFIG = {
     'host': os.getenv('DB_HOST', 'localhost'),
     'user': os.getenv('DB_USER', 'root'),
-    'password': os.getenv('DB_PASSWORD'),
-    'database': os.getenv('DB_NAME', 'road_assist_db'),
+    'password': os.getenv('DB_PASSWORD', 'Z!mb@2003'),
+    'database': os.getenv('DB_NAME', 'road_assistance_app'),
     'autocommit': True,
     'connection_timeout': 10,
     'pool_name': 'road_assist_pool',

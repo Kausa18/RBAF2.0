@@ -3,7 +3,7 @@
     "name": "Road Assist",
     "slug": "road-assist-userside",
     "version": "1.0.0",
-    "sdkVersion": "50.0.0",
+    "sdkVersion": "54.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",

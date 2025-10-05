@@ -99,8 +99,8 @@ const LoginScreen = () => {
     setIsLoading(true);
     try {
       const endpoint = userType === 'provider' 
-        ? 'http://192.168.1.113:5000/api/provider/login'
-        : 'http://192.168.1.113:5000/api/login';
+        ? 'http://172.20.10.3:5000/api/provider/login'
+        : 'http://172.20.10.3:5000/api/login';
 
       const res = await axios.post(endpoint, { email, password });
       
