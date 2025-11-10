@@ -13,6 +13,7 @@ import {
   Animated
 } from 'react-native';
 import axios from 'axios';
+import { API_ENDPOINTS } from '../config/api';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -98,9 +99,7 @@ const LoginScreen = () => {
 
     setIsLoading(true);
     try {
-      const endpoint = userType === 'provider' 
-        ? 'http://172.20.10.3:5000/api/provider/login'
-        : 'http://172.20.10.3:5000/api/login';
+      const endpoint = API_ENDPOINTS.LOGIN; // server will determine provider vs user
 
       const res = await axios.post(endpoint, { email, password });
       

@@ -1,30 +1,72 @@
+// middleware/auth.js
 const jwt = require('jsonwebtoken');
 
+// Generate JWT token
 const generateToken = (user) => {
   return jwt.sign(
-    { id: user.id, email: user.email, role: user.role || 'user' },
-    process.env.JWT_SECRET,
-    { expiresIn: process.env.JWT_EXPIRE }
+    { 
+      id: user.id, 
+      email: user.email, 
+      role: user.role 
+    },
+    process.env.JWT_SECRET || 'your-secret-key',
+    { expiresIn: process.env.JWT_EXPIRE || '24h' }
   );
 };
 
-const verifyToken = (req, res, next) => {
-  const token = req.headers.authorization?.split(' ')[1];
-
-  if (!token) {
-    return res.status(401).json({ message: 'No token provided' });
-  }
-
+// Verify JWT token
+const verifyToken = (token) => {
   try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    return jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
+  } catch (error) {
+    return null;
+  }
+};
+
+// Authenticate middleware
+const authenticate = (req, res, next) => {
+  try {
+    const authHeader = req.headers.authorization;
+    
+    if (!authHeader || !authHeader.startsWith('Bearer ')) {
+      return res.status(401).json({ message: 'No token provided' });
+    }
+
+    const token = authHeader.split(' ')[1];
+    const decoded = verifyToken(token);
+    
+    if (!decoded) {
+      return res.status(401).json({ message: 'Invalid or expired token' });
+    }
+
     req.user = decoded;
     next();
-  } catch (err) {
-    return res.status(401).json({ message: 'Invalid token' });
+  } catch (error) {
+    console.error('Auth error:', error);
+    res.status(401).json({ message: 'Authentication failed' });
   }
+};
+
+// Require provider role
+const requireProvider = (req, res, next) => {
+  if (!req.user || req.user.role !== 'provider') {
+    return res.status(403).json({ message: 'Access denied. Provider role required.' });
+  }
+  next();
+};
+
+// Require user role
+const requireUser = (req, res, next) => {
+  if (!req.user || req.user.role !== 'user') {
+    return res.status(403).json({ message: 'Access denied. User role required.' });
+  }
+  next();
 };
 
 module.exports = {
   generateToken,
   verifyToken,
+  authenticate,
+  requireProvider,
+  requireUser
 };

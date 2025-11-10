@@ -10,15 +10,15 @@ import {
   Modal,
   TouchableOpacity,
   ActivityIndicator,
-  Platform,
-  Linking
+  RefreshControl
 } from 'react-native';
-import MapView, { Marker, PROVIDER_GOOGLE, Circle } from 'react-native-maps';
+import Map from '../components/Map';
 import * as Location from 'expo-location';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import { MaterialIcons } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { API_ENDPOINTS } from '../config/api';
 
 const ProviderDashboardScreen = () => {
   const [requests, setRequests] = useState([]);
@@ -32,25 +32,37 @@ const ProviderDashboardScreen = () => {
     rating: 0,
     todayEarnings: 0
   });
-  const [selectedServiceType, setSelectedServiceType] = useState('all');
   const [loading, setLoading] = useState(true);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [provider, setProvider] = useState(null);
+  const [token, setToken] = useState(null);
   
   const navigation = useNavigation();
 
-  // Load provider data from AsyncStorage
+  // Load provider data and token
   useEffect(() => {
     const loadProvider = async () => {
       try {
         const providerData = await AsyncStorage.getItem('provider');
-        if (providerData) {
-          setProvider(JSON.parse(providerData));
+        const userToken = await AsyncStorage.getItem('userToken');
+        
+        if (providerData && userToken) {
+          const p = JSON.parse(providerData);
+          setProvider(p);
+          setToken(userToken);
+          
+          // Set axios default header
+          axios.defaults.headers.common['Authorization'] = `Bearer ${userToken}`;
+          
+          if (typeof p.is_available !== 'undefined') {
+            setIsAvailable(Boolean(p.is_available));
+          }
         } else {
           navigation.replace('Login');
         }
       } catch (error) {
-        console.error('Error loading provider data:', error);
-        Alert.alert('Error', 'Failed to load provider data');
+        console.error('Error loading provider:', error);
+        navigation.replace('Login');
       }
     };
     loadProvider();
@@ -68,28 +80,47 @@ const ProviderDashboardScreen = () => {
     return (R * c).toFixed(1);
   };
 
-  // Fetch open requests and provider statistics
-  useEffect(() => {
-    if (!provider) return;
-
+  // Fetch dashboard data
+  const fetchDashboard = async () => {
+    if (!provider || !token) return;
+    
     setLoading(true);
-    Promise.all([
-      axios.get('http://172.20.10.3:5000/api/open-requests'),
-      axios.get(`http://172.20.10.3:5000/api/provider/${provider.id}/statistics`)
-    ])
-      .then(([requestsRes, statsRes]) => {
-        setRequests(requestsRes.data);
-        setStatistics(statsRes.data);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error('❌ Error fetching data:', err);
-        Alert.alert('Error', 'Could not fetch dashboard data');
-        setLoading(false);
+    try {
+      // Fetch open requests
+      const requestsRes = await axios.get(API_ENDPOINTS.OPEN_REQUESTS);
+      
+      // Fetch provider statistics
+      const statsRes = await axios.get(API_ENDPOINTS.PROVIDER_STATS(provider.id));
+      
+      setRequests(requestsRes.data.requests || []);
+      setStatistics({
+        totalCompleted: statsRes.data.totalCompleted || 0,
+        rating: statsRes.data.rating || 0,
+        todayEarnings: statsRes.data.todayEarnings || 0
       });
-  }, [provider]);
+    } catch (err) {
+      console.error('Error fetching dashboard:', err?.response?.data || err.message);
+      Alert.alert('Error', 'Could not fetch dashboard data');
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  // Track provider's location and update availability
+  // Refresh handler
+  const onRefresh = async () => {
+    setIsRefreshing(true);
+    await fetchDashboard();
+    setIsRefreshing(false);
+  };
+
+  // Fetch dashboard data on mount and when provider changes
+  useEffect(() => {
+    if (provider && token) {
+      fetchDashboard();
+    }
+  }, [provider, token]);
+
+  // Track provider's location
   useFocusEffect(
     useCallback(() => {
       if (!provider) return;
@@ -107,18 +138,23 @@ const ProviderDashboardScreen = () => {
           });
 
           setProviderLocation(loc.coords);
-          await axios.put(`http://172.20.10.3:5000/api/update-location/${provider.id}`, {
-            latitude: loc.coords.latitude,
-            longitude: loc.coords.longitude,
-            is_available: isAvailable
-          });
+          
+          try {
+            await axios.put(API_ENDPOINTS.UPDATE_LOCATION(provider.id), {
+              latitude: loc.coords.latitude,
+              longitude: loc.coords.longitude,
+              is_available: isAvailable
+            });
+          } catch (err) {
+            console.error('Location update error:', err?.response?.data || err.message);
+          }
         } catch (err) {
-          console.log('📍 Location error:', err);
+          console.error('Location error:', err.message);
         }
       };
 
       updateLocation();
-      const interval = setInterval(updateLocation, 30000); // Update every 30 seconds
+      const interval = setInterval(updateLocation, 30000);
 
       return () => clearInterval(interval);
     }, [provider, isAvailable])
@@ -126,17 +162,24 @@ const ProviderDashboardScreen = () => {
 
   // Toggle availability status
   const toggleAvailability = async () => {
+    if (!provider) {
+      Alert.alert('Please wait', 'Provider data not loaded yet.');
+      return;
+    }
+
+    const newAvailable = !isAvailable;
+    setIsAvailable(newAvailable);
+
     try {
-      await axios.put(`http://172.20.10.3:5000/api/provider/${provider.id}/availability`, {
-        is_available: !isAvailable
+      await axios.put(API_ENDPOINTS.PROVIDER_AVAILABILITY(provider.id), {
+        latitude: providerLocation?.latitude || 0,
+        longitude: providerLocation?.longitude || 0,
+        is_available: newAvailable
       });
-      setIsAvailable(!isAvailable);
-      Alert.alert(
-        'Status Updated',
-        `You are now ${!isAvailable ? 'available' : 'unavailable'} for new requests`
-      );
+      Alert.alert('Status Updated', `You are now ${newAvailable ? 'available' : 'unavailable'} for new requests`);
     } catch (error) {
-      console.error('Error toggling availability:', error);
+      setIsAvailable(!newAvailable);
+      console.error('Error toggling availability:', error?.response?.data || error.message);
       Alert.alert('Error', 'Failed to update availability status');
     }
   };
@@ -155,57 +198,37 @@ const ProviderDashboardScreen = () => {
     }
 
     try {
-      await axios.put(`http://172.20.10.3:5000/api/assign-request/${request.id}`, {
+      await axios.put(API_ENDPOINTS.ASSIGN_REQUEST(request.id), {
         provider_id: provider.id
       });
-      
+
       setActiveRequest(request);
       setRequests(prev => prev.filter(r => r.id !== request.id));
       setModalVisible(false);
-      
+
       Alert.alert(
         '✅ Request Accepted',
-        'Navigate to customer location?',
-        [
-          {
-            text: 'Yes',
-            onPress: () => openMapsApp(request.latitude, request.longitude)
-          },
-          { text: 'Later' }
-        ]
+        'Request has been assigned to you',
+        [{ text: 'OK' }]
       );
     } catch (err) {
-      console.error('❌ Accept error:', err);
-      Alert.alert('Error', 'Failed to accept request');
+      console.error('Accept error:', err?.response?.data || err.message);
+      Alert.alert('Error', err?.response?.data?.message || 'Failed to accept request');
     }
-  };
-
-  // Open maps application for navigation
-  const openMapsApp = (lat, lng) => {
-    const scheme = Platform.select({
-      ios: 'maps:0,0?q=',
-      android: 'geo:0,0?q='
-    });
-    const latLng = `${lat},${lng}`;
-    const url = Platform.select({
-      ios: `${scheme}${latLng}`,
-      android: `${scheme}${latLng}`
-    });
-
-    Linking.openURL(url);
   };
 
   // Update request status
   const updateRequestStatus = async (requestId, status) => {
     try {
-      await axios.put(`http://172.20.10.3:5000/api/request/${requestId}/status`, { status });
+      await axios.put(API_ENDPOINTS.UPDATE_REQUEST_STATUS(requestId), { status });
       
       if (status === 'completed') {
         setActiveRequest(null);
         Alert.alert('Success', 'Request completed successfully!');
+        fetchDashboard(); // Refresh dashboard
       }
     } catch (error) {
-      console.error('Error updating request status:', error);
+      console.error('Error updating request status:', error?.response?.data || error.message);
       Alert.alert('Error', 'Failed to update request status');
     }
   };
@@ -213,6 +236,8 @@ const ProviderDashboardScreen = () => {
   const handleLogout = async () => {
     try {
       await AsyncStorage.removeItem('provider');
+      await AsyncStorage.removeItem('userToken');
+      delete axios.defaults.headers.common['Authorization'];
       navigation.reset({ index: 0, routes: [{ name: 'Login' }] });
     } catch (error) {
       console.error('Error during logout:', error);
@@ -270,53 +295,43 @@ const ProviderDashboardScreen = () => {
 
       {/* Map View */}
       {providerLocation && (
-        <MapView
-          provider={PROVIDER_GOOGLE}
+        <Map
+          location={providerLocation}
+          markers={requests.map(req => ({
+            id: req.id,
+            latitude: parseFloat(req.latitude),
+            longitude: parseFloat(req.longitude),
+            title: req.service_type,
+            description: `${calculateDistance(
+              providerLocation.latitude,
+              providerLocation.longitude,
+              parseFloat(req.latitude),
+              parseFloat(req.longitude)
+            )} km away`
+          }))}
+          onMarkerPress={viewRequestDetails}
           style={styles.map}
-          region={{
-            latitude: providerLocation.latitude,
-            longitude: providerLocation.longitude,
-            latitudeDelta: 0.02,
-            longitudeDelta: 0.02
-          }}
-        >
-          <Marker
-            coordinate={providerLocation}
-            title="Your Location"
-            pinColor="blue"
-          />
-          <Circle
-            center={providerLocation}
-            radius={2000}
-            fillColor="rgba(0, 0, 255, 0.1)"
-            strokeColor="rgba(0, 0, 255, 0.3)"
-          />
-          {requests.map((req) => (
-            <Marker
-              key={req.id}
-              coordinate={{
-                latitude: parseFloat(req.latitude),
-                longitude: parseFloat(req.longitude)
-              }}
-              title={`${req.service_type} Request`}
-              description={`${calculateDistance(
-                providerLocation.latitude,
-                providerLocation.longitude,
-                parseFloat(req.latitude),
-                parseFloat(req.longitude)
-              )} km away`}
-              onPress={() => viewRequestDetails(req)}
-            />
-          ))}
-        </MapView>
+          showUserLocation={true}
+          radius={2000}
+        />
       )}
 
       {/* Request List */}
-      <ScrollView style={styles.requestList}>
+      <ScrollView 
+        style={styles.requestList}
+        refreshControl={
+          <RefreshControl
+            refreshing={isRefreshing}
+            onRefresh={onRefresh}
+            colors={['#2196F3']}
+            tintColor="#2196F3"
+          />
+        }
+      >
         {loading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
+          <ActivityIndicator size="large" color="#0000ff" style={{ marginTop: 20 }} />
         ) : requests.length === 0 ? (
-          <Text style={styles.noRequests}>No open requests found</Text>
+          <Text style={styles.noRequests}>No open requests available</Text>
         ) : (
           requests.map((req) => (
             <TouchableOpacity
@@ -375,7 +390,7 @@ const ProviderDashboardScreen = () => {
                   }
                 </Text>
                 <Text style={styles.modalText}>
-                  <Text style={styles.label}>Description:</Text> {selectedRequest.description}
+                  <Text style={styles.label}>Description:</Text> {selectedRequest.description || 'No description'}
                 </Text>
                 
                 <View style={styles.modalButtons}>
@@ -465,7 +480,7 @@ const styles = StyleSheet.create({
     marginBottom: 8
   },
   map: {
-    height: 300,
+    height: 250,
     width: '100%',
     marginBottom: 8
   },
@@ -537,7 +552,8 @@ const styles = StyleSheet.create({
   noRequests: {
     textAlign: 'center',
     marginTop: 20,
-    color: '#666'
+    color: '#666',
+    fontSize: 16
   }
 });
 

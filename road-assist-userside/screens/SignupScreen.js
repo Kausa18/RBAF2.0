@@ -15,6 +15,7 @@ import {
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
 import { Picker } from '@react-native-picker/picker';
+import { API_ENDPOINTS } from '../config/api';
 
 const SignupScreen = ({ navigation }) => {
   const [form, setForm] = useState({
@@ -148,38 +149,33 @@ const SignupScreen = ({ navigation }) => {
 
     setLoading(true);
     try {
-      const signupData = {
-        ...form,
-        serviceTypes: selectedServices,
-      };
-
-      const res = await axios.post('http://172.20.10.3:5000/api/signup', signupData);
+      console.log('Signup Data:', form); // Log what you're sending
+      console.log('API URL:', API_ENDPOINTS.SIGNUP); // Log the URL
       
-      if (form.role === 'provider') {
-        Alert.alert(
-          'Provider Account Created',
-          'Your provider account has been created successfully! Your account will be reviewed within 24-48 hours. You will receive an email notification once approved.',
-          [{ 
-            text: 'OK', 
-            onPress: () => navigation.navigate('ProviderPending', { email: form.email })
-          }]
-        );
-      } else {
-        Alert.alert(
-          'Success',
-          'Account created successfully! Please log in.',
-          [{ text: 'OK', onPress: () => navigation.navigate('Login') }]
-        );
-      }
+      const res = await axios.post(API_ENDPOINTS.SIGNUP, form);
+      
+      Alert.alert(
+        'Success',
+        'Account created successfully! Please log in.',
+        [{ text: 'OK', onPress: () => navigation.navigate('Login') }]
+      );
     } catch (err) {
-      console.error('Signup error:', err.message);
+      console.error('Signup error details:', {
+        message: err.message,
+        response: err.response?.data,
+        status: err.response?.status,
+        url: err.config?.url
+      });
 
-      if (err.response && err.response.data?.message) {
+      if (err.response?.data?.message) {
         Alert.alert('Error', err.response.data.message);
       } else if (err.message === 'Network Error') {
-        Alert.alert('Connection Error', 'Please check your internet connection and try again.');
+        Alert.alert(
+          'Connection Error',
+          'Cannot connect to server. Make sure:\n1. Backend server is running\n2. Your phone and computer are on the same WiFi\n3. IP address is correct'
+        );
       } else {
-        Alert.alert('Error', 'An unexpected error occurred. Please try again.');
+        Alert.alert('Error', `Signup failed: ${err.message}`);
       }
     } finally {
       setLoading(false);

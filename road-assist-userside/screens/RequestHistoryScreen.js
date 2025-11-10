@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import { API_ENDPOINTS } from '../config/api';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as Sharing from 'expo-sharing';
 import * as FileSystem from 'expo-file-system';
@@ -32,7 +33,7 @@ const RequestHistoryScreen = ({ navigation }) => {
   const [sortOrder, setSortOrder] = useState('newest');
   const [searchText, setSearchText] = useState('');
   const fadeAnim = useState(new Animated.Value(0))[0];
-
+    
   // Status options for filtering
   const statusOptions = ['all', 'open', 'assigned', 'in_progress', 'completed', 'cancelled'];
 
@@ -73,16 +74,30 @@ const RequestHistoryScreen = ({ navigation }) => {
   const fetchRequestHistory = async (userId) => {
     try {
       const response = await axios.get(
-        `http://172.20.10.3:5000/api/user/${userId}/requests`
+        `${API_ENDPOINTS.SIGNUP.replace('/api/signup','')}/api/user/${userId}/requests`,
+        { timeout: 5000 }
       );
-      setRequests(response.data);
+      
+      if (response.data.success) {
+        setRequests(response.data.data || []);
+      } else {
+        console.error('API Error:', response.data.message);
+        Alert.alert('Error', response.data.message || 'Failed to load request history');
+        setRequests([]);
+      }
     } catch (error) {
-      console.error('Error fetching request history:', error);
+      console.error('Error fetching request history:', error.message);
       if (error.response?.status === 404) {
         Alert.alert('Info', 'No request history found');
         setRequests([]);
+      } else if (error.response?.status === 503) {
+        Alert.alert('Server Error', 'Database not available. Please try again later.');
+        setRequests([]);
+      } else if (error.response?.status === 500) {
+        Alert.alert('Server Error', 'Internal server error. Please try again later.');
+        setRequests([]);
       } else {
-        Alert.alert('Error', 'Failed to load request history');
+        Alert.alert('Error', error.message || 'Failed to load request history');
       }
     }
   };
@@ -227,20 +242,16 @@ const RequestHistoryScreen = ({ navigation }) => {
   const renderRequestItem = ({ item }) => (
     <View style={styles.requestCard}>
       <View style={styles.requestHeader}>
-        <Text style={styles.serviceType}>{item.service_type}</Text>
+        <Text style={styles.serviceType}>{item.service_type || 'General Assistance'}</Text>
         <View style={[styles.statusBadge, { backgroundColor: getStatusColor(item.status) }]}>
-          <Text style={styles.statusText}>{item.status?.toUpperCase()}</Text>
+          <Text style={styles.statusText}>{item.status?.toUpperCase() || 'UNKNOWN'}</Text>
         </View>
       </View>
 
-      <Text style={styles.description}>{item.description}</Text>
-
       <View style={styles.requestDetails}>
         <View style={styles.detailRow}>
-          <Text style={styles.detailLabel}>Urgency:</Text>
-          <View style={[styles.urgencyBadge, { backgroundColor: getUrgencyColor(item.urgency_level) }]}>
-            <Text style={styles.urgencyText}>{item.urgency_level?.toUpperCase()}</Text>
-          </View>
+          <Text style={styles.detailLabel}>Location:</Text>
+          <Text style={styles.detailValue}>{item.address || 'Location not specified'}</Text>
         </View>
 
         <View style={styles.detailRow}>
@@ -261,13 +272,6 @@ const RequestHistoryScreen = ({ navigation }) => {
             <Text style={styles.detailValue}>{formatDate(item.assigned_at)}</Text>
           </View>
         )}
-
-        {item.address && (
-          <View style={styles.detailRow}>
-            <Text style={styles.detailLabel}>Location:</Text>
-            <Text style={styles.detailValue}>{item.address}</Text>
-          </View>
-        )}
       </View>
 
       {item.provider_phone && (
@@ -279,10 +283,7 @@ const RequestHistoryScreen = ({ navigation }) => {
               `Call ${item.provider_name}?`,
               [
                 { text: 'Cancel', style: 'cancel' },
-                { text: 'Call', onPress: () => {
-                  // In a real app, you'd use Linking.openURL(`tel:${item.provider_phone}`)
-                  Alert.alert('Info', `Would call: ${item.provider_phone}`);
-                }}
+                { text: 'Call', onPress: () => callProvider(item.provider_phone) }
               ]
             );
           }}

@@ -1,218 +1,45 @@
-# Enhanced Flask Backend - Nearest Provider Service
+# Fixed Flask Backend - Nearest Provider Service
 import os
-import time
-import json
-import logging
-from datetime import datetime, timedelta
-from functools import wraps
-from logging.handlers import RotatingFileHandler
 from flask import Flask, request, jsonify
 from flask_cors import CORS
-from flask_limiter import Limiter
-from flask_limiter.util import get_remote_address
 from haversine import haversine
 import mysql.connector
-from mysql.connector import Error, pooling
+from mysql.connector import Error
+import logging
 from dotenv import load_dotenv
-
-# Set up logging first
-logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-
-# Create logs directory if it doesn't exist
-log_dir = 'logs'
-if not os.path.exists(log_dir):
-    os.makedirs(log_dir)
-
-# Configure file handler
-file_handler = RotatingFileHandler(
-    os.path.join(log_dir, 'app.log'),
-    maxBytes=10485760,  # 10MB
-    backupCount=5
-)
-file_handler.setLevel(logging.INFO)
-file_handler.setFormatter(logging.Formatter(
-    '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-))
-logger.addHandler(file_handler)
-
-# Configure console handler
-console_handler = logging.StreamHandler()
-console_handler.setLevel(logging.INFO)
-console_handler.setFormatter(logging.Formatter(
-    '%(levelname)s: %(message)s'
-))
-logger.addHandler(console_handler)
-
-# Optional Redis import
-try:
-    import redis
-    from flask_caching import Cache
-    REDIS_AVAILABLE = True
-    logger.info("Redis support enabled")
-except ImportError:
-    REDIS_AVAILABLE = False
-    logger.warning("Redis not available, running without caching")
 
 # Load environment variables from .env file
 load_dotenv()
 
-# Initialize Flask app
 app = Flask(__name__)
 CORS(app)  # Enable CORS for React Native requests
 
-# Initialize caching variables
-CACHE_ENABLED = False
-redis_client = None
-cache = None
-
-# Configure Redis and Caching if available
-if REDIS_AVAILABLE:
-    try:
-        REDIS_URL = os.getenv('REDIS_URL', 'redis://localhost:6379/0')
-        redis_client = redis.from_url(REDIS_URL)
-        cache = Cache(app, config={
-            'CACHE_TYPE': 'redis',
-            'CACHE_REDIS_URL': REDIS_URL,
-            'CACHE_DEFAULT_TIMEOUT': 300  # 5 minutes default
-        })
-        cache.init_app(app)
-        CACHE_ENABLED = True
-        logger.info("Redis cache enabled successfully")
-    except Exception as e:
-        logger.warning(f"Redis connection failed: {str(e)}. Running without caching.")
-        CACHE_ENABLED = False
-else:
-    logger.warning("Redis not installed. Running without caching.")
-
-# Configure Flask-Limiter with simple storage
-limiter = Limiter(
-    app=app,
-    key_func=get_remote_address,
-    default_limits=["200 per day", "50 per hour"],
-    storage_uri="memory://"  # Use in-memory storage instead of Redis
-)
-
-# Configure enhanced logging
-log_file = 'logs/app.log'
-os.makedirs(os.path.dirname(log_file), exist_ok=True)
-
-formatter = logging.Formatter(
-    '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
-)
-
-file_handler = RotatingFileHandler(
-    log_file, maxBytes=10485760, backupCount=10
-)
-file_handler.setFormatter(formatter)
-
-console_handler = logging.StreamHandler()
-console_handler.setFormatter(formatter)
-
+# Configure logging
+logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
-logger.setLevel(logging.INFO)
-logger.addHandler(file_handler)
-logger.addHandler(console_handler)
 
-# Performance monitoring decorator
-def monitor_performance(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        start_time = time.time()
-        result = f(*args, **kwargs)
-        duration = time.time() - start_time
-        
-        # Log if request takes more than 1 second
-        if duration > 1:
-            logger.warning(f"Slow request: {f.__name__} took {duration:.2f} seconds")
-            
-        # Store metrics in Redis if available
-        if REDIS_AVAILABLE and CACHE_ENABLED:
-            try:
-                metric_key = f"metrics:{f.__name__}:{datetime.now().strftime('%Y-%m-%d')}"
-                pipe = redis_client.pipeline()
-                pipe.lpush(f"{metric_key}:durations", duration)
-                pipe.incr(f"{metric_key}:calls")
-                pipe.expire(f"{metric_key}:durations", 86400)  # 24 hours
-                pipe.expire(f"{metric_key}:calls", 86400)
-                pipe.execute()
-            except redis.RedisError as e:
-                logger.warning(f"Failed to store metrics in Redis: {e}")
-        
-        return result
-    return decorated_function
-
-# Database configuration
+# Database configuration from environment variables
 DB_CONFIG = {
     'host': os.getenv('DB_HOST', 'localhost'),
     'user': os.getenv('DB_USER', 'root'),
     'password': os.getenv('DB_PASSWORD', 'Z!mb@2003'),
     'database': os.getenv('DB_NAME', 'road_assistance_app'),
     'autocommit': True,
-    'connection_timeout': 10,
-    'pool_name': 'road_assist_pool',
-    'pool_size': 5,
-    'pool_reset_session': True
+    'connection_timeout': 10
 }
-
-# Create connection pool
-try:
-    connection_pool = mysql.connector.pooling.MySQLConnectionPool(**DB_CONFIG)
-    logger.info("Database connection pool created successfully")
-except Error as e:
-    logger.critical(f"Failed to create connection pool: {e}")
-    raise
 
 def get_db_connection():
     """
-    Get a connection from the pool with retry mechanism
-    Returns connection object or None if all retries fail
+    Create and return a new database connection.
+    Returns None if connection fails.
     """
-    max_retries = 3
-    retry_delay = 1  # seconds
-    
-    for attempt in range(max_retries):
-        try:
-            connection = connection_pool.get_connection()
-            if connection.is_connected():
-                return connection
-        except Error as e:
-            logger.error(f"Database connection error (attempt {attempt + 1}/{max_retries}): {e}")
-            if attempt < max_retries - 1:
-                time.sleep(retry_delay)
-                retry_delay *= 2  # exponential backoff
-            continue
-    
-    logger.critical("All database connection attempts failed")
-    return None
-
-def execute_query(query, params=None, fetch=True):
-    """
-    Execute a database query with proper connection handling and retries
-    """
-    connection = None
-    cursor = None
     try:
-        connection = get_db_connection()
-        if not connection:
-            raise Exception("Could not get database connection")
-            
-        cursor = connection.cursor(dictionary=True)
-        cursor.execute(query, params or ())
-        
-        if fetch:
-            result = cursor.fetchall()
-            return result
-        return None
-        
+        connection = mysql.connector.connect(**DB_CONFIG)
+        if connection.is_connected():
+            return connection
     except Error as e:
-        logger.error(f"Database query error: {e}")
-        raise
-    finally:
-        if cursor:
-            cursor.close()
-        if connection:
-            connection.close()
+        logger.error(f"Database connection error: {e}")
+        return None
 
 def validate_coordinates(lat, lng):
     """
@@ -246,16 +73,11 @@ def safe_float_conversion(value, field_name):
         return None
 
 @app.route('/find-nearest-provider', methods=['POST'])
-@limiter.limit("30/minute")
-@monitor_performance
 def find_nearest_provider():
     """
     Find the nearest available service provider based on user location.
     Expects JSON: {"latitude": float, "longitude": float}
     Returns: {"provider": provider_data, "distance_km": float} or error
-    
-    Rate limit: 30 requests per minute
-    Cache: Results cached for 30 seconds based on location
     """
     try:
         # Validate request data
@@ -295,8 +117,8 @@ def find_nearest_provider():
         try:
             cursor = db.cursor(dictionary=True)
             
-            # Query for available providers
-            query = "SELECT * FROM service_providers WHERE availability = 1"
+            # Query for available providers - FIXED: is_available instead of availability
+            query = "SELECT * FROM service_providers WHERE is_available = 1"
             cursor.execute(query)
             providers = cursor.fetchall()
             
@@ -381,35 +203,12 @@ def find_nearest_provider():
         return jsonify({'error': 'Internal server error'}), 500
 
 @app.route('/match-providers', methods=['POST'])
-@limiter.limit("30/minute")
-@monitor_performance
 def match_providers():
     """
     Get all available providers with distances from user location.
     Expects JSON: {"latitude": float, "longitude": float}
     Returns: List of providers with distances
-    
-    Rate limit: 30 requests per minute
-    Cache: Results cached for 30 seconds based on location (if Redis is available)
     """
-    if not request.is_json:
-        return jsonify({'error': 'Request must be JSON'}), 400
-        
-    data = request.get_json()
-    if not data:
-        return jsonify({'error': 'Empty request body'}), 400
-
-    # Check cache if Redis is available
-    if REDIS_AVAILABLE and CACHE_ENABLED:
-        try:
-            cache_key = f"providers:{data.get('latitude')}:{data.get('longitude')}"
-            cached_result = cache.get(cache_key)
-            if cached_result:
-                logger.info("Returning cached providers list")
-                return jsonify(cached_result), 200
-        except Exception as e:
-            logger.warning(f"Cache error: {e}")
-            # Continue without cache
     try:
         if not request.is_json:
             return jsonify({'error': 'Request must be JSON'}), 400
@@ -438,7 +237,8 @@ def match_providers():
         
         try:
             cursor = db.cursor(dictionary=True)
-            cursor.execute("SELECT * FROM service_providers WHERE availability = 1")
+            # FIXED: Changed from availability to is_available
+            cursor.execute("SELECT * FROM service_providers WHERE is_available = 1")
             providers = cursor.fetchall()
             
             providers_with_distance = []

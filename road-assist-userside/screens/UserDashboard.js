@@ -17,9 +17,11 @@ import {
 import MapView, { Marker, PROVIDER_GOOGLE, Circle } from 'react-native-maps';
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
+import { API_ENDPOINTS } from '../config/api';
 import * as Location from 'expo-location';
 import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import io from 'socket.io-client';
 
 const { width, height } = Dimensions.get('window');
 const ASPECT_RATIO = width / height;
@@ -62,6 +64,25 @@ const UserDashboard = () => {
         const parsed = JSON.parse(storedUser);
         console.log('Loaded user ID:', parsed.id); 
         setUserId(parsed.id);
+        setUser(parsed);
+        // If user is owner/admin, connect to sockets to receive admin events
+        if (parsed.role === 'owner' || parsed.role === 'admin') {
+          try {
+            const socket = io(API_ENDPOINTS.SIGNUP.replace('/api/signup',''));
+            socket.on('connect', () => console.log('Admin socket connected'));
+            socket.on('admin:new-provider', (data) => {
+              Alert.alert('New Provider Signup', `Provider ${data.name} (${data.businessName}) has registered and is pending approval.`,
+                [ { text: 'Open Admin', onPress: () => console.log('Open admin panel') }, { text: 'OK' } ]
+              );
+            });
+            socket.on('admin:provider-status-updated', (data) => {
+              // Optional: notify admins about status changes
+              console.log('Provider status updated:', data);
+            });
+          } catch (socketErr) {
+            console.warn('Socket connection failed for admin:', socketErr);
+          }
+        }
       } else {
         console.warn('No user found in AsyncStorage'); 
       }
@@ -116,7 +137,7 @@ const UserDashboard = () => {
         longitudeDelta: LONGITUDE_DELTA,
       });
 
-      const response = await axios.post('http://172.20.10.3:5001/match-providers', {
+  const response = await axios.post(API_ENDPOINTS.MATCH_PROVIDERS, {
         latitude,
         longitude
       });
@@ -151,7 +172,7 @@ const UserDashboard = () => {
     setRequestLoading(true);
     try {
       // Create the help request
-      const response = await axios.post('http://172.20.10.3:5000/api/request-help', {
+  const response = await axios.post(API_ENDPOINTS.REQUEST_HELP, {
         user_id: userId,
         provider_id: selectedProvider.id,
         latitude: location.latitude,

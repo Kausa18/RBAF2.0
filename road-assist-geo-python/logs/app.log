@@ -118,3 +118,179 @@
 2025-10-05 09:54:48,639 - __main__ - INFO - Redis cache enabled successfully
 2025-10-05 09:55:00,638 - __main__ - CRITICAL - Failed to create connection pool: 1049 (42000): Unknown database 'road_assistance'
 2025-10-05 09:55:00,638 - __main__ - CRITICAL - Failed to create connection pool: 1049 (42000): Unknown database 'road_assistance'
+2025-10-05 10:21:13,577 - __main__ - INFO - Redis support enabled
+2025-10-05 10:21:13,644 - __main__ - INFO - Redis cache enabled successfully
+2025-10-05 10:21:14,907 - __main__ - INFO - Database connection pool created successfully
+2025-10-05 10:21:14,907 - __main__ - INFO - Database connection pool created successfully
+2025-10-05 10:21:14,911 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-05 10:21:14,911 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-05 10:21:14,911 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-05 10:21:14,911 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-05 10:21:16,948 - __main__ - INFO - Redis support enabled
+2025-10-05 10:21:16,960 - __main__ - INFO - Redis cache enabled successfully
+2025-10-05 10:21:17,161 - __main__ - INFO - Database connection pool created successfully
+2025-10-05 10:21:17,161 - __main__ - INFO - Database connection pool created successfully
+2025-10-05 10:21:17,165 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-05 10:21:17,165 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-05 10:21:17,166 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-05 10:21:17,166 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-13 07:22:43,705 - __main__ - INFO - Redis support enabled
+2025-10-13 07:22:44,196 - __main__ - INFO - Redis cache enabled successfully
+2025-10-13 07:22:50,659 - __main__ - INFO - Database connection pool created successfully
+2025-10-13 07:22:50,659 - __main__ - INFO - Database connection pool created successfully
+2025-10-13 07:22:50,671 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-13 07:22:50,671 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-13 07:22:50,673 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-13 07:22:50,673 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-13 07:22:54,543 - __main__ - INFO - Redis support enabled
+2025-10-13 07:22:54,558 - __main__ - INFO - Redis cache enabled successfully
+2025-10-13 07:22:54,706 - __main__ - INFO - Database connection pool created successfully
+2025-10-13 07:22:54,706 - __main__ - INFO - Database connection pool created successfully
+2025-10-13 07:22:56,902 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-13 07:22:56,902 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-13 07:22:56,903 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-13 07:22:56,903 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-14 10:57:05,096 - __main__ - INFO - Redis support enabled
+2025-10-14 10:57:05,526 - __main__ - INFO - Redis cache enabled successfully
+2025-10-14 10:57:08,659 - __main__ - INFO - Database connection pool created successfully
+2025-10-14 10:57:08,659 - __main__ - INFO - Database connection pool created successfully
+2025-10-14 10:57:08,668 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-14 10:57:08,668 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-14 10:57:08,670 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-14 10:57:08,670 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-14 10:57:24,388 - __main__ - INFO - Redis support enabled
+2025-10-14 10:57:24,403 - __main__ - INFO - Redis cache enabled successfully
+2025-10-14 10:57:24,699 - __main__ - INFO - Database connection pool created successfully
+2025-10-14 10:57:24,699 - __main__ - INFO - Database connection pool created successfully
+2025-10-14 10:57:24,705 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-14 10:57:24,705 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-14 10:57:24,706 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-14 10:57:24,706 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-14 11:04:02,879 - __main__ - INFO - Redis support enabled
+2025-10-14 11:04:02,888 - __main__ - INFO - Redis cache enabled successfully
+2025-10-14 11:04:03,122 - __main__ - INFO - Database connection pool created successfully
+2025-10-14 11:04:03,122 - __main__ - INFO - Database connection pool created successfully
+2025-10-14 11:04:03,124 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-14 11:04:03,124 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-14 11:04:03,125 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-14 11:04:03,125 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-14 11:04:16,337 - __main__ - INFO - Redis support enabled
+2025-10-14 11:04:16,350 - __main__ - INFO - Redis cache enabled successfully
+2025-10-14 11:04:16,468 - __main__ - INFO - Database connection pool created successfully
+2025-10-14 11:04:16,468 - __main__ - INFO - Database connection pool created successfully
+2025-10-14 11:04:16,470 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-14 11:04:16,470 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-14 11:04:16,471 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-14 11:04:16,471 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-14 12:09:00,515 - __main__ - INFO - Redis support enabled
+2025-10-14 12:09:00,604 - __main__ - INFO - Redis cache enabled successfully
+2025-10-14 12:09:02,056 - __main__ - INFO - Database connection pool created successfully
+2025-10-14 12:09:02,056 - __main__ - INFO - Database connection pool created successfully
+2025-10-14 12:09:02,057 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-14 12:09:02,057 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-14 12:09:02,058 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-14 12:09:02,058 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-14 12:09:16,954 - __main__ - INFO - Redis support enabled
+2025-10-14 12:09:16,971 - __main__ - INFO - Redis cache enabled successfully
+2025-10-14 12:09:17,109 - __main__ - INFO - Database connection pool created successfully
+2025-10-14 12:09:17,109 - __main__ - INFO - Database connection pool created successfully
+2025-10-14 12:09:17,111 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-14 12:09:17,111 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-14 12:09:17,111 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-14 12:09:17,111 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-14 13:03:47,904 - __main__ - WARNING - Cache error: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-10-14 13:03:47,904 - __main__ - WARNING - Cache error: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-10-14 13:03:47,975 - __main__ - ERROR - Database query error: 1054 (42S22): Unknown column 'availability' in 'where clause'
+2025-10-14 13:03:47,975 - __main__ - ERROR - Database query error: 1054 (42S22): Unknown column 'availability' in 'where clause'
+2025-10-14 13:03:47,983 - __main__ - WARNING - Slow request: match_providers took 4.19 seconds
+2025-10-14 13:03:47,983 - __main__ - WARNING - Slow request: match_providers took 4.19 seconds
+2025-10-14 13:03:52,036 - __main__ - WARNING - Failed to store metrics in Redis: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-10-14 13:03:52,036 - __main__ - WARNING - Failed to store metrics in Redis: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-10-14 13:03:59,688 - __main__ - WARNING - Cache error: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-10-14 13:03:59,688 - __main__ - WARNING - Cache error: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-10-14 13:03:59,693 - __main__ - ERROR - Database query error: 1054 (42S22): Unknown column 'availability' in 'where clause'
+2025-10-14 13:03:59,693 - __main__ - ERROR - Database query error: 1054 (42S22): Unknown column 'availability' in 'where clause'
+2025-10-14 13:03:59,695 - __main__ - WARNING - Slow request: match_providers took 4.05 seconds
+2025-10-14 13:03:59,695 - __main__ - WARNING - Slow request: match_providers took 4.05 seconds
+2025-10-14 13:04:03,742 - __main__ - WARNING - Failed to store metrics in Redis: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-10-14 13:04:03,742 - __main__ - WARNING - Failed to store metrics in Redis: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-10-14 13:04:12,444 - __main__ - WARNING - Cache error: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-10-14 13:04:12,444 - __main__ - WARNING - Cache error: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-10-14 13:04:12,452 - __main__ - ERROR - Database query error: 1054 (42S22): Unknown column 'availability' in 'where clause'
+2025-10-14 13:04:12,452 - __main__ - ERROR - Database query error: 1054 (42S22): Unknown column 'availability' in 'where clause'
+2025-10-14 13:04:12,459 - __main__ - WARNING - Slow request: match_providers took 4.04 seconds
+2025-10-14 13:04:12,459 - __main__ - WARNING - Slow request: match_providers took 4.04 seconds
+2025-10-14 13:04:16,496 - __main__ - WARNING - Failed to store metrics in Redis: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-10-14 13:04:16,496 - __main__ - WARNING - Failed to store metrics in Redis: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-10-14 13:04:21,831 - __main__ - WARNING - Cache error: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-10-14 13:04:21,831 - __main__ - WARNING - Cache error: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-10-14 13:04:21,839 - __main__ - ERROR - Database query error: 1054 (42S22): Unknown column 'availability' in 'where clause'
+2025-10-14 13:04:21,839 - __main__ - ERROR - Database query error: 1054 (42S22): Unknown column 'availability' in 'where clause'
+2025-10-14 13:04:21,846 - __main__ - WARNING - Slow request: match_providers took 4.07 seconds
+2025-10-14 13:04:21,846 - __main__ - WARNING - Slow request: match_providers took 4.07 seconds
+2025-10-14 13:04:25,899 - __main__ - WARNING - Failed to store metrics in Redis: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-10-14 13:04:25,899 - __main__ - WARNING - Failed to store metrics in Redis: Error 10061 connecting to localhost:6379. No connection could be made because the target machine actively refused it.
+2025-10-14 19:30:10,971 - __main__ - INFO - Redis support enabled
+2025-10-14 19:30:11,316 - __main__ - INFO - Redis cache enabled successfully
+2025-10-14 19:30:27,193 - __main__ - INFO - Database connection pool created successfully
+2025-10-14 19:30:27,193 - __main__ - INFO - Database connection pool created successfully
+2025-10-14 19:30:27,200 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-14 19:30:27,200 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-14 19:30:27,201 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-14 19:30:27,201 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-14 19:30:42,908 - __main__ - INFO - Redis support enabled
+2025-10-14 19:30:42,917 - __main__ - INFO - Redis cache enabled successfully
+2025-10-14 19:30:43,944 - __main__ - INFO - Database connection pool created successfully
+2025-10-14 19:30:43,944 - __main__ - INFO - Database connection pool created successfully
+2025-10-14 19:30:43,949 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-14 19:30:43,949 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-14 19:30:43,950 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-14 19:30:43,950 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-15 23:23:02,957 - __main__ - INFO - Redis support enabled
+2025-10-15 23:23:03,114 - __main__ - INFO - Redis cache enabled successfully
+2025-10-15 23:23:05,877 - __main__ - INFO - Database connection pool created successfully
+2025-10-15 23:23:05,877 - __main__ - INFO - Database connection pool created successfully
+2025-10-15 23:23:05,881 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-15 23:23:05,881 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-15 23:23:05,882 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-15 23:23:05,882 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-15 23:23:07,916 - __main__ - INFO - Redis support enabled
+2025-10-15 23:23:07,926 - __main__ - INFO - Redis cache enabled successfully
+2025-10-15 23:23:08,165 - __main__ - INFO - Database connection pool created successfully
+2025-10-15 23:23:08,165 - __main__ - INFO - Database connection pool created successfully
+2025-10-15 23:23:08,167 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-15 23:23:08,167 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-15 23:23:08,168 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-15 23:23:08,168 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-16 08:44:45,568 - __main__ - INFO - Redis support enabled
+2025-10-16 08:44:45,889 - __main__ - INFO - Redis cache enabled successfully
+2025-10-16 08:44:53,273 - __main__ - INFO - Database connection pool created successfully
+2025-10-16 08:44:53,273 - __main__ - INFO - Database connection pool created successfully
+2025-10-16 08:44:53,275 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-16 08:44:53,275 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-16 08:44:53,276 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-16 08:44:53,276 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-16 08:45:07,635 - __main__ - INFO - Redis support enabled
+2025-10-16 08:45:07,653 - __main__ - INFO - Redis cache enabled successfully
+2025-10-16 08:45:07,964 - __main__ - INFO - Database connection pool created successfully
+2025-10-16 08:45:07,964 - __main__ - INFO - Database connection pool created successfully
+2025-10-16 08:45:07,969 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-16 08:45:07,969 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-16 08:45:07,970 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-16 08:45:07,970 - __main__ - INFO - Database: root@localhost/road_assistance_app
+2025-10-16 09:03:15,712 - __main__ - INFO - Redis support enabled
+2025-10-16 09:03:15,746 - __main__ - INFO - Redis cache enabled successfully
+2025-10-16 09:03:16,557 - __main__ - INFO - Database connection pool created successfully
+2025-10-16 09:03:16,557 - __main__ - INFO - Database connection pool created successfully
+2025-10-16 09:03:16,560 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-16 09:03:16,560 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-16 09:03:16,561 - __main__ - INFO - Database: root@127.0.0.1/road_assistance_app
+2025-10-16 09:03:16,561 - __main__ - INFO - Database: root@127.0.0.1/road_assistance_app
+2025-10-16 09:03:30,076 - __main__ - INFO - Redis support enabled
+2025-10-16 09:03:30,084 - __main__ - INFO - Redis cache enabled successfully
+2025-10-16 09:03:30,339 - __main__ - INFO - Database connection pool created successfully
+2025-10-16 09:03:30,339 - __main__ - INFO - Database connection pool created successfully
+2025-10-16 09:03:30,342 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-16 09:03:30,342 - __main__ - INFO - Starting Nearest Provider Service...
+2025-10-16 09:03:30,342 - __main__ - INFO - Database: root@127.0.0.1/road_assistance_app
+2025-10-16 09:03:30,342 - __main__ - INFO - Database: root@127.0.0.1/road_assistance_app
