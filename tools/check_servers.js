@@ -7,9 +7,10 @@ const TIMEOUT = 5000; // 5 seconds
 
 // Endpoints to check
 const endpoints = [
-  { name: 'Main API - Open Requests', url: `${API_HOST}/api/open-requests` },
-  { name: 'Main API - Login', url: `${API_HOST}/api/login`, method: 'POST', data: { email: 'test@test.com', password: 'test' } },
-  { name: 'Provider Matcher', url: `${MATCH_HOST}/match-providers` },
+  { name: 'Main API - Signup', url: `${API_HOST}/api/signup`, method: 'POST', data: { name: 'Test User', email: 'test@test.com', password: 'password123', phone: '1234567890' } },
+  { name: 'Main API - Login', url: `${API_HOST}/api/login`, method: 'POST', data: { email: 'test@test.com', password: 'password123' } },
+  { name: 'Provider Matcher', url: `${MATCH_HOST}/match-providers`, method: 'POST', data: { latitude: 37.7749, longitude: -122.4194 } },
+  { name: 'Main API - Request Help', url: `${API_HOST}/api/request-help`, method: 'POST', data: { user_id: 1, provider_id: 1, latitude: 37.7749, longitude: -122.4194, issue_type: 'Flat Tire' } },
 ];
 
 // Test a single endpoint
